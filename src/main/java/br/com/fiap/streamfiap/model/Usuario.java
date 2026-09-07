@@ -52,7 +52,6 @@ public class Usuario {
         }
 
         debitarCreditos(p);
-        c.setDisponivel(false);
 
         System.out.println("==================================================");
         System.out.println("RECIBO STREAMFIAP");
