@@ -17,7 +17,8 @@ public class Serie extends Conteudo implements Promocionavel {
         this.numeroTemporadas = numeroTemporadas;
     }
 
-    public double calcularPrecoAluguel(double desconto) {
+    @Override
+    public double calcularPrecoAluguel() {
         return PRECO_POR_TEMPORADA * numeroTemporadas;
     }
 
