@@ -32,4 +32,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleUsuarioNaoEncontrado(UsuarioNaoEncontradoException e){
         return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+    @ExceptionHandler(ClassificacaoIndicativaException.class)
+    public ResponseEntity<String> handleClassificacaoIndicativa(ClassificacaoIndicativaException e){
+        return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+    }
 }
