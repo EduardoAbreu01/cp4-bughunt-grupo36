@@ -1,5 +1,6 @@
 package br.com.fiap.streamfiap.controller;
 
+import br.com.fiap.streamfiap.exception.UsuarioNaoEncontradoException;
 import br.com.fiap.streamfiap.model.Usuario;
 import br.com.fiap.streamfiap.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> buscarPorId(@PathVariable Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado: " + id));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException("Usuário não encontrado: " + id));
         return ResponseEntity.ok(usuario);
     }
 }
