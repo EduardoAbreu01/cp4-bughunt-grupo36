@@ -1,9 +1,7 @@
 package br.com.fiap.streamfiap.model;
 
 import br.com.fiap.streamfiap.exception.ClassificacaoIndicativaException;
-import br.com.fiap.streamfiap.exception.ConteudoIndisponivelException;
 import br.com.fiap.streamfiap.exception.CreditosInsuficientesException;
-import br.com.fiap.streamfiap.exception.UsuarioNaoEncontradoException;
 import jakarta.persistence.*;
 
 @Entity
@@ -37,7 +35,7 @@ public class Usuario {
         this.creditos = this.creditos - valor;
     }
 
-    public Usuario alugar(Conteudo conteudo) throws ClassificacaoIndicativaException, ConteudoIndisponivelException {
+    public Usuario alugar(Conteudo conteudo) throws ClassificacaoIndicativaException {
         if (this.idade < conteudo.getClassificacaoEtaria()) {
             throw new ClassificacaoIndicativaException("Usuário de " + this.idade
                     + " anos não pode assistir a " + conteudo.getTitulo()
