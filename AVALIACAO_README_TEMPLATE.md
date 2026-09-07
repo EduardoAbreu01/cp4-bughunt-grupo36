@@ -16,7 +16,7 @@
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | ___ / 12 |
+| **Total de bugs corrigidos** | _12_ / 12 |
 | **Total de ajustes de Clean Code** | ___ / 6 |
 
 ---
@@ -28,18 +28,18 @@
 
 | # | Sintoma observado (o que fiz/vi) | Causa raiz (arquivo e linha aproximada) | Correção aplicada | Conceito da disciplina |
 |---|---|---|---|---|
-| bug01 | | | | |
-| bug02 | | | | |
-| bug03 | | | | |
-| bug04 | | | | |
-| bug05 | | | | |
-| bug06 | | | | |
-| bug07 | | | | |
-| bug08 | | | | |
-| bug09 | | | | |
-| bug10 | | | | |
-| bug11 | | | | |
-| bug12 | | | | |
+| bug01 | A API aceitava cadastrar conteúdos com duracaoMinutos <= 0.|Ausência de validação para duração no modelo Conteudo e encapsulamento violado (acesso direto ao atributo duracaoMinutos sem utilizar getters/setters) |Adicionada a validação duracaoMinutos <= 0 lançando DuracaoInvalidaException no setter do Conteudo, alterada a visibilidade do atributo para private e mapeado o retorno HTTP 400 no GlobalExceptionHandler.|Encapsulamento, Validação de Domínio e Tratamento de Exceções no Spring Boot|
+| bug02 |Buscar conteúdo inexistente (GET /api/conteudos/99) retorna resposta vazia com HTTP 200 |Bloco try-catch capturando a exceção e retornando null |Removido o bloco try-catch para permitir a propagação da ConteudoNaoEncontradoException até o GlobalExceptionHandler. |Tratamento de Exceções|
+| bug03 |A busca por categoria (GET /api/conteudos/categoria/{categoria}) retornava erro ou lista vazia. |Comparação de Strings realizada de forma incorreta ou insensível a maiúsculas/minúsculas.|Atualizada a comparação de categoria para utilizar .equalsIgnoreCase(). |Comparação de Objetos em Java|
+| bug04 |Erro ao cadastrar usuário (POST /api/usuarios) devido a erro de valor nulo na coluna id do banco de dados |A estratégia de geração de chave primária no @GeneratedValue não estava compatível com a sequência do banco de dados. |Alterada a estratégia para GenerationType.SEQUENCE na entidade Usuario |Mapeamento Objeto-Relacional (JPA) e Geração de Chaves Primárias |
+| bug05 |Ao cadastrar usuário (POST /api/usuarios), o nome vinha como null na resposta ou no banco. |Falta da palavra-chave this no construtor (nome = nome), resultando em atribuição de variável local em vez de preencher o atributo do objeto. |Alterado para this.nome = nome no construtor da classe Usuario. |Escopo de Variáveis, Encapsulamento e Uso do Operador this em Java |
+| bug06 |Ao tentar alugar com um usuarioId inexistente, a API disparava IllegalArgumentException gerando status HTTP incorreto. |Uso de exceção genérica do Java (IllegalArgumentException) em vez de exceção personalizada. |Substituído por UsuarioNaoEncontradoException para retornar HTTP 404 via GlobalExceptionHandler. |Tratamento de Exceções e ResponseEntity |
+| bug07 |A exceção de classificação indicativa (ClassificacaoIndicativaException) gerava erro genérico (HTTP 500) em vez de uma resposta clara de erro na API.|Faltava o mapeamento do manipulador da ClassificacaoIndicativaException na classe GlobalExceptionHandler. |Adicionado o tratamento @ExceptionHandler(ClassificacaoIndicativaException.class) no GlobalExceptionHandler para retornar HTTP 400 Bad Request com a mensagem de erro. |Tratamento Global de Exceções no Spring Boot e Mapeamento de Status HTTP |
+| bug08 |Usuários com saldo suficiente eram impedidos de alugar, enquanto usuários sem saldo conseguiam alugar sem ter créditos. |Operador relacional invertido no método temCreditosSuficientes (preco >= creditos). |Invertida a comparação para creditos >= preco (ou preco <= creditos). |Operadores Relacionais e Lógica de Negócio |
+| bug09 |A API permitia o aluguel de um conteúdo mesmo quando ele não estava disponível. |Ausência de verificação da flag disponivel do conteúdo antes de realizar o aluguel. |Adicionada a validação lançando ConteudoIndisponivelException("Conteúdo indisponível para aluguel") ao tentar alugar. |Regra de Negócio e Validação de Domínio |
+| bug10 |Após o primeiro aluguel, o conteúdo ficava permanentemente indisponível para outros usuários. |Chamada indevida de c.setDisponivel(false) dentro do método alugar. |Removida a alteração do status de disponibilidade do conteúdo no processo de aluguel. |Regra de Negócio|
+| bug11 |Ao cadastrar uma Serie, os atributos herdados de Conteudo (titulo, categoria, disponivel, classificacaoEtaria, etc.) eram salvos como null ou 0 no banco de dados. |O construtor da classe Serie não repassava os parâmetros herdados para o construtor da superclasse via super |Atualizado o construtor de Serie para receber os campos de Conteudo e realizar a chamada super |Herança em POO |
+| bug12 |O aluguel de um Documentario estava debitando valor incorreto dos créditos do usuário no endpoint de aluguel. |A subclasse Documentario não sobrescrevia calcularPrecoAluguel() com o valor/desconto correto de sua regra de negócio (retornando o valor base da superclasse). |Sobrescrito o método calcularPrecoAluguel() em Documentario para aplicar a regra de preço/gratuidade prevista no modelo. |Sobrescrita de Métodos (@Override), Polimorfismo e Regras de Negócio |
 
 ## Parte 2 — Ajustes de Clean Code
 
