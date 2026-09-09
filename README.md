@@ -6,10 +6,12 @@
 
 | Integrante | RM | Turma |
 |---|---|---|
-| Gabriel dos Anjos | | |
-| Eduardo Abreu | | |
-| | | |
-| | | |
+|Gabriel dos Anjos |565532 |2CCPO |
+|Eduardo Abreu |566460 |2CCPO|
+|João Pedro de Souza Ferreira|563869 |2CCPO |
+|João Pedro da Silva Costa |565031  |2CCPO |
+|Gabriel De Biasi Couto |563247 |2CCPO |
+|Rodrigo Campos|566386 |2CCPO |
 
 | Campo | |
 |---|---|
